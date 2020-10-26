@@ -1,15 +1,33 @@
-import javax.swing.*;
-import java.util.Scanner;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.BitSet;
 
-public class main{
-     public static void main(String[] args) {
+public  class main{
+    private static int dimension;
+
+    private static BitSet bit;
+    private static ThreadPool pool;
+
+    public static void  main(String[] args) throws NoSuchAlgorithmException {
 
 
-         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-         System.out.println("Enter username");
+         
 
-         String userName = myObj.nextLine();  // Read user input
-         System.out.println("Username is: " + userName);  // Output user input
-     }
+
+        Buffer buffer= new Buffer(5,3);
+         System.out.println( "llegue wachin");
+
+        pool=new ThreadPool(3,  2,buffer) ;
+        System.out.println( "llegue wachin");
+
+        pool.run();
+
+
+
+
+
+
+    }
 
 }

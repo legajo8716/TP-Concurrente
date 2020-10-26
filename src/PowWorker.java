@@ -3,17 +3,22 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class PowWorker extends Thread{
-    int barrido;
+    ArrayList<Integer> barrido;
     String cadena;
     MessageDigest messageDigest;
     Integer inicio;
     Integer fin;
     int id;
-     PowWorker(ArrayList<Integer> barrido, String cadena, int i){
+     PowWorker(String cadena, int i,Buffer buffer){
+         barrido=buffer.pop();
          inicio= barrido.get(0);
          fin=barrido.get(1);
         this.cadena=cadena;
          id=i;
+
+
+
+
 
     }
     //[0, 2^29), [2^29, 2^30), [2^30, 2^31) y [2^31, 2^32)

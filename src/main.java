@@ -11,33 +11,44 @@ public  class main{
     private static ThreadPool pool;
     private int cantThread;
 
-    public static void  main(String[] args) throws NoSuchAlgorithmException {
+    public static void  main(String[] args)  {
         //ingreso de informacion
         System.out.println("ingrese cantida de thread");
-        int cantThread=reader.nextInt();;
+        int cantThread=reader.nextInt();
         System.out.println("ingrese cadena a evaluar");
-        String cadena  =reader.nextLine();
+        String cadena  =reader.next();
 
         //asignacion de unidad de trabajo
-        int unidadDeTrabajo= (int) (Math.pow(2,(32-cantThread))/4);
-        int init=0;
-        int finaly=unidadDeTrabajo;
-        Buffer buffer=new Buffer();
-        
-        for(int i=0;i<cantThread-1;i++){
-            buffer.add(init,finaly);
-           init=finaly;
-           finaly=finaly+unidadDeTrabajo;
+        long unidadDeTrabajo = 4294967296L/cantThread;
+
+
+        Buffer buffer= new Buffer(2);
+        pool=new ThreadPool(cantThread,cadena,buffer) ;
+        pool.run();
+        for (int i=0;i<cantThread;i++){
+            long inicioAux=unidadDeTrabajo*(i);
+            long finAux=unidadDeTrabajo*(i+1);
+            System.out.println(i + "estoy produciendo"+finAux );
+
+            buffer.add(inicioAux, finAux);
+
         }
+
+
+        ;
+
+
+
+
+
+
 
 
 
          System.out.println( "llegue wachin");
 
-        pool=new ThreadPool(3,  2,buffer) ;
         System.out.println( "llegue wachin");
 
-        pool.run();
 
 
 

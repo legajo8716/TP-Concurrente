@@ -1,17 +1,19 @@
 import java.util.ArrayList;
 
-public class Buffer extends Thread{
-    private ArrayList<Integer> cola;
+public class Buffer {
+    private ArrayList<Long> cola;
     private int cantDatos=0;
-    private int dimension;
     private int cantThread;
 
-    public Buffer() {
-        this.cola= new ArrayList<Integer>(dimension);
+    public Buffer(int dimension) {
+        this.cola= new ArrayList<Long>(dimension);
 
 
     }
-    synchronized ArrayList<Integer> pop() {
+
+
+
+    public synchronized ArrayList<Long> pop() {
         while (this.cola.isEmpty()) {
             try {
                 wait();
@@ -19,9 +21,10 @@ public class Buffer extends Thread{
                 System.out.println("Thread  interrupted.");
             }
         }
-        ArrayList<Integer> colaAux=new ArrayList<>(2);
-        colaAux.add(this.cola.get(0));
-        colaAux.add(this.cola.get(1));
+        ArrayList<Long> colaAux=new ArrayList<Long>(2);
+        colaAux.add(cola.get(0));
+        colaAux.add(cola.get(1));
+
 
         this.cola.clear();
         notifyAll();
@@ -32,7 +35,7 @@ public class Buffer extends Thread{
         return colaAux;
     }
 
-    synchronized void add(int init,int finaly) {
+    public  synchronized void add(long init,long finaly) {
         while (!cola.isEmpty()) {
             try {
                 wait();

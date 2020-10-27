@@ -3,47 +3,36 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class PowWorker extends Thread{
-    ArrayList<Integer> barrido;
+    ArrayList<Long> barrido;
     String cadena;
     MessageDigest messageDigest;
-    Integer inicio;
-    Integer fin;
+
+    Buffer buffer;
     int id;
-     PowWorker(String cadena, int i,Buffer buffer){
-         barrido=buffer.pop();
-         inicio= barrido.get(0);
-         fin=barrido.get(1);
+      PowWorker(String cadena, int i,Buffer b){
+         this.buffer=b;
         this.cadena=cadena;
          id=i;
-
-
-
-
-
-    }
-    //[0, 2^29), [2^29, 2^30), [2^30, 2^31) y [2^31, 2^32)
-
-
-    @Override
+     }
+     @Override
     public synchronized void run()  {
-        super.run();
-        System.out.println(id);
-
-        cadena = "Hola";
-
+        barrido=buffer.pop();
+        long inicio= barrido.get(0);
+       long  fin=barrido.get(1);
+       System.out.println("thread numero "+this.id+" inicio "+inicio+"fin "+fin);
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        buscar();
+        buscar(inicio, fin);
     }
-        public  void buscar(){
-        for(Integer i=this.inicio;i<this.fin;i++){
+        public synchronized   void buscar(long inicio, long fin){
+        for(long i=inicio;i<fin;i++){
             byte[] aux=(cadena+i).getBytes();
             byte[] hash=messageDigest.digest(aux);
-            if(hash[0]==0 && hash[1]==0 && hash[2]==0  ){
-                System.out.println( hash[0]+"thread"+ "   "+inicio+"    "+fin );
+            if(hash[0]==0 && hash[1]==0 && hash[2]==0 && hash[4]==0 ){
+                System.out.println("llegue negrito soy thread numero "+this.id);
             }
         }
     }

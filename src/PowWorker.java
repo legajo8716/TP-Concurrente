@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -29,8 +30,13 @@ public class PowWorker extends Thread{
     }
         public synchronized   void buscar(long inicio, long fin){
         for(long i=inicio;i<fin;i++){
-            byte[] aux=(cadena+i).getBytes();
+            byte [] aux = ByteBuffer.allocate(8).putLong(i ).array();
+            byte[] byteCadena=cadena.getBytes();
+            for(int e =0;i<4;i++){
+                aux[e]=byteCadena[e];
+            }
             byte[] hash=messageDigest.digest(aux);
+           // System.out.println("Thread numero "+this.id+"buscando en posicion numero "+i);
             if(hash[0]==0 && hash[1]==0 && hash[2]==0 && hash[4]==0 ){
                 System.out.println("llegue negrito soy thread numero "+this.id);
             }

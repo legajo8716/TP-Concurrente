@@ -29,8 +29,7 @@ public class Buffer {
         this.cola.clear();
         notifyAll();
 
-        System.out.println(colaAux.get(0));
-        System.out.println(colaAux.get(1));
+
 
         return colaAux;
     }

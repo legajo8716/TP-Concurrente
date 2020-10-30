@@ -18,9 +18,7 @@ public class Productor extends Thread{
     public synchronized void run() {
         int i=0;
         while(true){
-           System.out.println(i);
             double inicioAux=unidadDeTrabajo*i;
-
             double finAux=unidadDeTrabajo*(++i);
             buffer.add((int)inicioAux, (int)finAux);
 

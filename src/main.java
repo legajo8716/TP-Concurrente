@@ -1,9 +1,10 @@
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Scanner;
+import java.util.*;
+
 
 public  class main{
     private  static Scanner reader = new Scanner(System.in);
@@ -12,6 +13,9 @@ public  class main{
     private int cantThread;
 
     public static void  main(String[] args)  {
+
+
+
         //ingreso de informacion
         System.out.println("ingrese cantida de thread");
         int cantThread=reader.nextInt();
@@ -28,32 +32,11 @@ public  class main{
         for (int i=0;i<cantThread;i++){
             long inicioAux=unidadDeTrabajo*(i);
             long finAux=unidadDeTrabajo*(i+1);
+            System.out.println(i + "estoy produciendo"+inicioAux );
+
             System.out.println(i + "estoy produciendo"+finAux );
-
             buffer.add(inicioAux, finAux);
-
         }
-
-
-        ;
-
-
-
-
-
-
-
-
-
-         System.out.println( "llegue wachin");
-
-        System.out.println( "llegue wachin");
-
-
-
-
-
-
 
     }
 

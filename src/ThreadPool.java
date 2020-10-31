@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ThreadPool {
 
@@ -6,13 +8,18 @@ public class ThreadPool {
     ArrayList<PowWorker> pows;
     Buffer buffer;
     boolean noceEncontrado=false;
-    public  ThreadPool(int cant,String cadena,Buffer b){
+    Cronometro cronometro;
+    int tiempo=0;
+
+    public  ThreadPool(int cant, String cadena, Buffer b, int dificultad){
         cantPow=cant;
         pows=new ArrayList<PowWorker>(cant);
         buffer=b;
+        cronometro= new Cronometro(this);
         for (int i=0;i<cantPow;i++){
-            pows.add(new PowWorker( cadena,  i, b,this));
+            pows.add(new PowWorker( cadena,  i, b,this,dificultad));
         }
+
     }
 
 
@@ -21,10 +28,13 @@ public class ThreadPool {
      for (PowWorker p : pows){
         p.start();
      }
+        cronometro.run();
     }
+
 
     public void encontreNoce() {
         this.noceEncontrado=true;
+        System.out.println("Pasaron "+this.tiempo+"s para encontrar el nonce");
     }
 
     public void getArrayByteToHexa(byte[] cadena){
@@ -37,5 +47,8 @@ public class ThreadPool {
     }
 
 
+    public void pasarUnSegundo() {
+        tiempo++;
 
+    }
 }

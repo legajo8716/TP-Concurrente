@@ -11,12 +11,14 @@ public class PowWorker extends Thread{
     Buffer buffer;
     int id;
     int dificultad;
+    boolean seguiBuscando;
       PowWorker(String cadena, int i, Buffer b, ThreadPool threadPool, int d){
          this.buffer=b;
         this.cadena=cadena;
          id=i;
          pool=threadPool;
          dificultad=d;
+         seguiBuscando =true;
      }
      @Override
     public synchronized void run()  {
@@ -33,7 +35,7 @@ public class PowWorker extends Thread{
     }
         public synchronized   void buscar(long inicio, long fin){
           long i=inicio;
-          while (i<fin && pool.noceEncontrado==false){
+          while (i<fin && seguiBuscando){
                         byte [] aux = ByteBuffer.allocate(8).putLong(i ).array();
                         byte[] byteCadena=cadena.getBytes();
                         for(int e =0;i<4;i++){
@@ -45,7 +47,7 @@ public class PowWorker extends Thread{
                         i++;
           }
           if(i==fin){
-              System.out.println("No encontre el noce, Worker numero "+ this.id);
+              System.out.println("\nNo encontre el noce, Worker numero "+ this.id);
           }
     }
 
@@ -53,6 +55,8 @@ public class PowWorker extends Thread{
 
     private void verificacionDeHash(byte[] hash, long i) {
         if(this.cumpleConLaDificultad(hash)  ){
+            System.out.println("\n----------------Informe---------------------------------");
+
             System.out.println("El noce es "+i+" soy el worker numero "+this.id);
             pool.encontreNoce();
             pool.getArrayByteToHexa(hash);
@@ -67,4 +71,8 @@ public class PowWorker extends Thread{
           }
         return resultado;
       }
+
+    public void dejaDeBuscar() {
+          this.seguiBuscando =false;
+    }
 }

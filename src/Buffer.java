@@ -14,7 +14,7 @@ public class Buffer {
 
 
     public synchronized ArrayList<Long> pop() {
-        while (this.cola.isEmpty()) {
+        while (this.cola.isEmpty() ) {
             try {
                 wait();
             } catch (Exception e) {
@@ -45,13 +45,6 @@ public class Buffer {
         this.cola.add(init);
         this.cola.add(finaly);
         notifyAll();
-
-
-
-
-
-
-        }
-
+    }
 
 }

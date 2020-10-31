@@ -8,14 +8,35 @@ public class ThreadPool {
     ArrayList<PowWorker> pows;
     Buffer buffer;
     boolean noceEncontrado=false;
-    Cronometro cronometro;
+    TimerTask cronometro;
     int tiempo=0;
+    boolean run=true;
 
     public  ThreadPool(int cant, String cadena, Buffer b, int dificultad){
         cantPow=cant;
         pows=new ArrayList<PowWorker>(cant);
+        cronometro=new TimerTask() {
+            int count = 0;
+            @Override
+            public void run() {
+                if (run) {
+                    tiempo++;
+                }
+                else{
+
+                    cancel();
+                }
+            }
+        };
+
+
+
+
+
+
+
+
         buffer=b;
-        cronometro= new Cronometro(this);
         for (int i=0;i<cantPow;i++){
             pows.add(new PowWorker( cadena,  i, b,this,dificultad));
         }
@@ -24,17 +45,24 @@ public class ThreadPool {
 
 
     public  void run() {
+            System.out.println("\n-------------- Asignando unidades de trabajos-------------------");
+             for (PowWorker p : pows){
+                p.start();
+             }
+             cronometro.run();
 
-     for (PowWorker p : pows){
-        p.start();
-     }
-        cronometro.run();
     }
 
 
     public void encontreNoce() {
         this.noceEncontrado=true;
         System.out.println("Pasaron "+this.tiempo+"s para encontrar el nonce");
+        for(PowWorker p :pows){
+            p.dejaDeBuscar();
+
+        }
+        run=false;
+
     }
 
     public void getArrayByteToHexa(byte[] cadena){

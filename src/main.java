@@ -14,7 +14,6 @@ public  class main{
     private static BitSet bit;
     private static ThreadPool pool;
     private int cantThread;
-    private Timer timer;
 
 
     public static void  main(String[] args) {

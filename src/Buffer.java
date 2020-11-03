@@ -2,17 +2,10 @@ import java.util.ArrayList;
 
 public class Buffer {
     private ArrayList<Long> cola;
-    private int cantDatos=0;
-    private int cantThread;
 
     public Buffer(int dimension) {
         this.cola= new ArrayList<Long>(dimension);
-
-
     }
-
-
-
     public synchronized ArrayList<Long> pop() {
         while (this.cola.isEmpty() ) {
             try {
@@ -24,13 +17,8 @@ public class Buffer {
         ArrayList<Long> colaAux=new ArrayList<Long>(2);
         colaAux.add(cola.get(0));
         colaAux.add(cola.get(1));
-
-
         this.cola.clear();
         notifyAll();
-
-
-
         return colaAux;
     }
 
@@ -46,5 +34,4 @@ public class Buffer {
         this.cola.add(finaly);
         notifyAll();
     }
-
 }

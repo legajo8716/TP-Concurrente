@@ -56,7 +56,6 @@ public class PowWorker extends Thread{
     private void verificacionDeHash(byte[] hash, long i) {
         if(this.cumpleConLaDificultad(hash)  ){
             System.out.println("\n----------------Informe---------------------------------");
-
             System.out.println("El noce es "+i+" soy el worker numero "+this.id);
             pool.encontreNoce();
             pool.getArrayByteToHexa(hash);
